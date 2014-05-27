@@ -1,0 +1,54 @@
+<project name="tfidf-demo" basedir=".">
+	<description>Applet demonstrating libtfidf.</description>
+	<!-- global properties -->
+	<property name="src" location="src"/>
+	<property name="bin" location="bin"/>
+	<property name="lib" location="lib"/>
+	<property name="jarfile" location="demo.jar"/>
+	<property name="javadoc" location="javadoc"/>
+	<property name="java" value="1.8"/> <!-- java version -->
+	
+	<path id="master-classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${bin}"/>
+		<mkdir dir="${javadoc}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${bin}" source="${java}" debug="on">
+			<classpath refid="master-classpath"/>
+		</javac>
+	</target>
+
+	<target name="test" depends="compile" description="create jar">
+		<jar jarfile="${jarfile}" basedir="${bin}">
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			<fileset dir="." includes="LICENSE"/>
+			<manifest>
+				<attribute name="Main-Class" value="com.tfidfdemo.TfIdfDemo"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="javadoc" description="Documentation">
+		<javadoc sourcepath="${src}" destdir="${javadoc}" author="true"
+			version="true" windowtitle="tfidf-demo">
+			<classpath refid="master-classpath"/>
+			<link href="http://docs.oracle.com/javase/8/docs/api/"/>
+			<link href="http://lwjgl.org/javadoc/"/>
+		</javadoc>
+	</target>
+</project>
