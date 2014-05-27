@@ -2,19 +2,57 @@
 <html lang="en">
 <head>
 <title>Applet Demo</title>
+<link rel="StyleSheet" type="text/css" href="index.css"/>
+<style type="text/css">
+a:link, a:visited {
+	color: #898995;
+	text-decoration: none;
+	transition: color 600ms, background-color 600ms,
+			padding 600ms, text-shadow 600ms;
+}
+a:hover, a:active {
+	text-decoration: underline;
+	color: #efefef;
+	background-color: #7f8f9f;
+	padding: 3px;
+	text-shadow: 0px -1px 0px rgba(0,0,0,0.5);
+}
+</style>
+<script type="text/javascript" src="mathjax.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+	tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+});
+</script>
 </head>
 <body>
-<object id="applet-object">
-	<param name="archive" value="demo.jar"/>
-	<param name="code" value="com.tfidfdemo.TfIdfDemo"/>
-	<!-- for IE -->
-	<embed id="applet-embed"
-		type="application/x-java-applet;version=1.8"
-		width="256" height="256"
-		archive="demo.jar"
-		code="com.tfidfdemo.TfIdfDemo"
-		pluginspage="http://java.com/download">
-	</embed>
-</object>
+<div id="main">
+	<h1>tf-idf</h1>
+	<p>
+		<a href="https://en.wikipedia.org/wiki/tf-idf" style="font-weight: bold;">tf-idf</a> is a heuristic method for assessing the relevance of a particular term in a document to a query. It stands for <i>Term Frequency-Inverse Document Frequency</i>, and is actually a product of two analytical values, <i>tf</i> and <i>idf</i>.
+	</p>
+	<h2>How it works</h2>
+	<p>
+\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]
+	</p>
+	<object id="applet-object" type="application/x-java-applet"
+		width="800" height="500">
+		<param name="archive" value="demo.jar"/>
+		<param name="code" value="com.tfidfdemo.TfIdfDemo"/>
+		<!-- for IE -->
+		<embed id="applet-embed"
+			type="application/x-java-applet;version=1.8"
+
+			width="256" height="256"
+			archive="demo.jar"
+			code="com.tfidfdemo.TfIdfDemo"
+			pluginspage="http://java.com/download">
+		</embed>
+	</object>
+</div>
 </body>
 </html>
