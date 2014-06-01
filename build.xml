@@ -6,7 +6,7 @@
 	<property name="lib" location="lib"/>
 	<property name="jarfile" location="html/demo.jar"/>
 	<property name="javadoc" location="javadoc"/>
-	<property name="java" value="1.8"/> <!-- java version -->
+	<property name="java" value="1.7"/> <!-- java version -->
 	
 	<path id="master-classpath">
 		<fileset dir="${lib}">
@@ -47,7 +47,7 @@
 		<javadoc sourcepath="${src}" destdir="${javadoc}" author="true"
 			version="true" windowtitle="tfidf-demo">
 			<classpath refid="master-classpath"/>
-			<link href="http://docs.oracle.com/javase/8/docs/api/"/>
+			<link href="http://docs.oracle.com/javase/7/docs/api/"/>
 		</javadoc>
 	</target>
 </project>

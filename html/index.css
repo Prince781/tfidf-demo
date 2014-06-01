@@ -6,7 +6,7 @@
 html, body { margin: 0px; padding: 0px; }
 
 body {
-	background-color: #f9f8f8;
+	background-color: #e9e9ec;
 }
 
 #main {
@@ -16,8 +16,8 @@ body {
 	border: 1px solid #a9a9a9;
 	margin: 40px auto 40px auto;
 	border-radius: 5px;
-	background-color: #ededed;
-	box-shadow: inset 0px 2px 1px #f3f3f3, 0px 0px 3px #ccc;
+	background-color: #f7f7f7; /* applet color:  #ededed */
+	box-shadow: inset 0px 2px 1px #fff, 0px 0px 3px #ccc;
 }
 
 #main > h1,

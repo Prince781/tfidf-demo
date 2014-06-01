@@ -2,24 +2,23 @@ package com.tfidfdemo.gfx;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 
 import javax.swing.*;
 
-import com.libtfidf.tfidf.Analysis;
+import com.tfidfdemo.TfIdfDemo;
 
 public class GUI {
 	// GUI
 	private static JPanel canvas, bottom;
 	private static JButton browse, analyze;
 	private static JLabel label;
+	private static JTextField termField;
 	
 	// IO
-	private static File[] files;
-	public static void init(JApplet applet) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {}
+	private static File[] files = new File[0];
+	public static void init(final JApplet applet) {
+		setDefaultUI();
 		
 		// canvas
 		canvas = new JPanel(true) {
@@ -39,9 +38,12 @@ public class GUI {
 						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				
 				g.clearRect(0, 0, width, height);
+				
 				// render background
-				g.setColor(new Color(20,20,20));
+				g.setColor(new Color(40,40,40));
 				g.fillRect(0, 0, width, height);
+				// render analytical results
+				Grapher.renderData(g, width, height);
 				
 				screenUpdate();
 				repaint();
@@ -55,33 +57,73 @@ public class GUI {
 		browse = new JButton("Select Corpus");
 		browse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				final JFileChooser fc = new JFileChooser();
+				fc.setMultiSelectionEnabled(true);
+				if (fc.showOpenDialog(applet) == JFileChooser.APPROVE_OPTION)
+					files = fc.getSelectedFiles();
 			}
 		});
 		
 		analyze = new JButton("Analyze");
 		analyze.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { GUI.tfidf(); }
+			public void actionPerformed(ActionEvent e) {
+				if (files.length == 0)
+					showNotice(applet,
+								"You must select plain-text files to analyze.");
+				else try {
+					if (termField.getText().isEmpty())
+						showNotice(applet, "Please enter a search term.");
+					else TfIdfDemo.tfidf(termField.getText().split(" ")[0]);
+				} catch (IOException exp) {
+					showNotice(applet, "There was an error while reading.");
+				}
+			}
 		});
 		
 		// text label
 		label = new JLabel("libtfidf Demo", SwingConstants.CENTER);
 		label.setPreferredSize(new Dimension(350, 50));
 		
+		// term field
+		termField = new JTextField();
+		termField.setPreferredSize(new Dimension(100, 30));
+		termField.setText("term");
+		termField.setToolTipText("Enter a single word (term) to search for.");
+		
 		applet.setLayout(new BoxLayout(applet.getContentPane(),
 				BoxLayout.Y_AXIS));
 		applet.add(canvas);
 			bottom.add(browse);
 			bottom.add(label);
+			bottom.add(termField);
 			bottom.add(analyze);
 		applet.add(bottom);
 	}
 	
+	public static void showNotice(final JApplet applet, String text) {
+		JOptionPane.showMessageDialog(applet, text);
+	}
+	
 	/**
-	 * Perform TFIDF using the library.
+	 * Gets selected files.
 	 */
-	public static void tfidf() {
-		Analysis an = new Analysis();
-		
+	public static File[] getFiles() { return files; }
+	
+	/**
+	 * Resets file count.
+	 */
+	public static void resetFiles() { files = new File[0]; }
+	
+	/**
+	 * Attempts to set the appearance of the file chooser to the default 
+	 * requested by the system's theme.
+	 */
+	public static void setDefaultUI() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
 }
