@@ -4,7 +4,7 @@
 	<property name="src" location="src"/>
 	<property name="bin" location="bin"/>
 	<property name="lib" location="lib"/>
-	<property name="jarfile" location="demo.jar"/>
+	<property name="jarfile" location="html/demo.jar"/>
 	<property name="javadoc" location="javadoc"/>
 	<property name="java" value="1.8"/> <!-- java version -->
 	
@@ -48,7 +48,6 @@
 			version="true" windowtitle="tfidf-demo">
 			<classpath refid="master-classpath"/>
 			<link href="http://docs.oracle.com/javase/8/docs/api/"/>
-			<link href="http://lwjgl.org/javadoc/"/>
 		</javadoc>
 	</target>
 </project>
