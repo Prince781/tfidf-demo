@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.swing.JApplet;
 
 import com.libtfidf.doc.PlainTextDocument;
-import com.libtfidf.tfidf.Analysis;
+import com.libtfidf.analysis.Analysis;
 import com.tfidfdemo.gfx.GUI;
 import com.tfidfdemo.gfx.Grapher;
 
@@ -44,12 +44,12 @@ public class TfIdfDemo extends JApplet {
 			an = new Analysis(docs); // only perform IO with new sets of files
 		}
 		
-		int length = an.getCorpus().length;
+		int length = files.length;
 		double[] data = new double[length];
 		double max = 0;
 		
 		for (int d=0; d<length; d++) {
-			data[d] = an.tfIDF(term, d);
+			data[d] = an.tfidf(term, d);
 			if (d == 0) max = data[d];
 			if (data[d] > max) max = data[d];
 			System.out.printf("data[%d] = %f\n", d, data[d]);
