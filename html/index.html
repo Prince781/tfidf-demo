@@ -33,20 +33,20 @@ a:hover, a:active {
 	<h2>How it works</h2>
 	<h3>tf</h3>
 	<p>Our term frequency is a raw statistic of our document. It is proportional to the number of raw instances in our document and inversely proportional to the maximum instance of any word in our document. The method for computing the term frequency employed is:</p>
-	<p>$$tf(t,d) = 0.5 + {{0.5f(t,d)} \over {max\{f(w,d) : w \in d\}}}$$</p>
+	<p>$$tf(t,d) = {{0.5f(t,d)} \over {max\{f(w,d) : w \in d\}}}$$</p>
 	<p>Where</p>
 	<p>$f(t,d)$ is the raw frequency of our specific term $t$ in our document $d$</p>
 	<p>$max\{f(w,d) : w \in d\}$ is the maximum frequency of any word $w$ in our document</p>
-	<p>One can see that if our document is very long and biased towards one specific term, then our $tf(t,d)$ calculation will adjust itself to lower our document's relevance to our query. This is to ensure that longer documents are not necessarily deemed more relevant than shorter ones if they contain a lot of extraneous information. Obviously, for terms like &quot;the&quot; and &quot;a&quot; that are articles, our calculations do not consider them.</p>
+	<p>One can see that if our document is very long and biased towards one specific term, then our $tf(t,d)$ calculation will adjust itself to lower our document's relevance to our query. This is to ensure that longer documents are not necessarily deemed more relevant than shorter ones if they contain a lot of extraneous information.</p>
 	<h3>idf</h3>
 	<p>It then becomes relevant to consider the term itself, or how relevant it is across <i>all</i> documents. This leads to our inverse document frequency calculation:</p>
-	<p>$$idf(t,D) = log{{N}\over{1+|\{d \in D : t \in d\}|}}$$</p>
+	<p>$$idf(t,D) = log{{N}\over{|\{d \in D : t \in d\}|}}$$</p>
 	<p>Where</p>
 	<p>$N$ is the total number of documents in our <a href="http://en.wikipedia.org/wiki/Text_corpus">corpus</a></p>
 	<p>$D$ is a <i>set</i> containing our documents</p>
 	<p>$t$ is our queried term</p>
-	<p>$|\{d \in D : t \in d\}|$ is the total number of documents that contain references to our term. We add this to $1$ in the denominator to avoid division-by-zero if no documents contain references to our term.</p>
-	<p>Thus, we can see that our $idf(t,D)$ value is a constant multiplier across all individual $tf(t,d)$ calculations for each document. The idf value is useful in telling us if our query $t$ in general is a good one (if it's a rare term or a common term among many documents). For example, if $t$ = &quot;the&quot;, our $tf$ might vary for each document, but our $idf$, which is taken across all of the documents, will be (when $N$ is very large) $log{N \over {1 + N}} \approx log {1} \approx 0$. Thus, sorting many documents by occurrences of the word &quot;the&quot; is not much of a good query in the first place.</p>
+	<p>$|\{d \in D : t \in d\}|$ is the total number of documents that contain references to our term.</p>
+	<p>Thus, we can see that our $idf(t,D)$ value is a constant multiplier across all individual $tf(t,d)$ calculations for each document. The idf value is useful in telling us if our query $t$ in general is a good one (if it's a rare term or a common term among many documents). For example, if $t$ = &quot;the&quot;, our $tf$ might vary for each document, but our $idf$, which is taken across all of the documents, will be $log{N \over N} = log {1} = 0$. Thus, sorting many documents by occurrences of the word &quot;the&quot; is not much of a good query in the first place.</p>
 	<h3>Putting the two together: tf-idf</h3>
 	<p>We therefore define our statistic to be:</p>
 	<p>$$tfidf(t,d,D) = tf(t,d) \times idf(t,D)$$</p>
